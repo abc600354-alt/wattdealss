@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
@@ -12,34 +12,50 @@
     gtag('js', new Date());
     gtag('config', 'G-LCF65WFRLN'); // Replace with your GA4 Measurement ID
   </script>
+
+  <!-- Firebase v12 Modular SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCqqmrDAQDFMD5r9EZmCHT7vDS-vG-xSw0",
+      authDomain: "wattdeals-b2e89.firebaseapp.com",
+      databaseURL: "https://wattdeals-b2e89-default-rtdb.firebaseio.com",
+      projectId: "wattdeals-b2e89",
+      storageBucket: "wattdeals-b2e89.firebasestorage.app",
+      messagingSenderId: "366879541253",
+      appId: "1:366879541253:web:b423c9a69a12075b3bf46c",
+      measurementId: "G-Y6TVHNB2DR"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Log page view
+    push(ref(db, 'page_views'), { timestamp: Date.now() });
+
+    function redirectWithGAAndFirebase() {
+      // GA4 download event
+      gtag("event", "pkpass_download", {
+        "file_name": "wattdeals-pass.pkpass"
+      });
+
+      // Firebase download log
+      push(ref(db, 'downloads'), { timestamp: Date.now(), file_name: "wattdeals-pass.pkpass" });
+
+      // Redirect after 500ms
+      setTimeout(function() {
+        window.location.href = "https://drive.google.com/uc?export=download&id=1cmJKI2cwibzm0Q3BRH8m2RRi8XatUqQP";
+      }, 500);
+    }
+
+    // Trigger download after page load
+    window.onload = redirectWithGAAndFirebase;
+
+  </script>
 </head>
 <body>
   <p>Preparing your WattDeals Pass download...</p>
-
-  <script>
-    function redirectWithGA() {
-      // Get UTM parameters if any
-      const urlParams = new URLSearchParams(window.location.search);
-      const utm_source = urlParams.get('utm_source') || '';
-      const utm_medium = urlParams.get('utm_medium') || '';
-      const utm_campaign = urlParams.get('utm_campaign') || '';
-
-      // Fire GA event
-      gtag("event", "pkpass_download", {
-        "file_name": "wattdeals-pass.pkpass",
-        "utm_source": utm_source,
-        "utm_medium": utm_medium,
-        "utm_campaign": utm_campaign
-      });
-
-      // Delay redirect to ensure GA fires
-      setTimeout(function() {
-        window.location.href = "https://drive.google.com/uc?export=download&id=1cmJKI2cwibzm0Q3BRH8m2RRi8XatUqQP";
-      }, 500); // 500ms delay
-    }
-
-    // Run redirect after page fully loads
-    window.onload = redirectWithGA;
-  </script>
 </body>
 </html>
