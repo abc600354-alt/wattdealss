@@ -17,21 +17,21 @@
   <p>Preparing your WattDeals Pass download...</p>
 
   <script>
-    // Wait until GA is ready before redirect
     function redirectWithGA() {
       // Fire GA event
       gtag("event", "pkpass_download", {
         "file_name": "wattdeals-pass.pkpass"
       });
 
-      // Delay redirect by 500ms to ensure GA fires
+      // Delay redirect slightly to ensure GA logs the event
       setTimeout(function() {
         window.location.href = "https://drive.google.com/uc?export=download&id=1cmJKI2cwibzm0Q3BRH8m2RRi8XatUqQP";
       }, 500);
     }
 
-    // Run redirect after page load
+    // Run redirect after page fully loads
     window.onload = redirectWithGA;
   </script>
 </body>
 </html>
+
