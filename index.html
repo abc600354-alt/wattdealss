@@ -10,7 +10,7 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-LCF65WFRLN'); // Replace with your GA4 Measurement ID
+    gtag('config', 'G-LCF65WFRLN'); // Your GA4 Measurement ID
   </script>
 </head>
 <body>
@@ -18,24 +18,15 @@
 
   <script>
     function redirectWithGA() {
-      // Get UTM parameters if any
-      const urlParams = new URLSearchParams(window.location.search);
-      const utm_source = urlParams.get('utm_source') || '';
-      const utm_medium = urlParams.get('utm_medium') || '';
-      const utm_campaign = urlParams.get('utm_campaign') || '';
-
       // Fire GA event
       gtag("event", "pkpass_download", {
-        "file_name": "wattdeals-pass.pkpass",
-        "utm_source": utm_source,
-        "utm_medium": utm_medium,
-        "utm_campaign": utm_campaign
+        "file_name": "wattdeals-pass.pkpass"
       });
 
-      // Delay redirect to ensure GA fires
+      // Delay redirect slightly to ensure GA logs the event
       setTimeout(function() {
         window.location.href = "https://drive.google.com/uc?export=download&id=1cmJKI2cwibzm0Q3BRH8m2RRi8XatUqQP";
-      }, 500); // 500ms delay
+      }, 500);
     }
 
     // Run redirect after page fully loads
